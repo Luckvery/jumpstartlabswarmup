@@ -1,0 +1,77 @@
+require 'jumpstart_auth'
+
+#  I kept getting "certificate verify failed (Twitter::Error::ClientError)"
+#  Every time I tried to call my tweet method. Found a solution on SO. 
+#  The following disables the SSL security but it allows you to process
+#  with troubleshooting. The underlying issue is an outdated SSL.
+#  http://bit.ly/15tfOdX
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
+class MicroBlogger
+  attr_reader :client
+
+  def initialize
+    puts "Initializing"
+    @client = JumpstartAuth.twitter
+  end
+
+  def followers_of_auth_user
+    @client.followers.collect{|follower| follower.screen_name}
+  end
+
+  def spam_my_followers(message)
+    screen_names = followers_of_auth_user
+   
+    for screen_names.each do |screen_name|
+       @
+    end
+   
+  end
+
+  def isFollower?(target)
+   screen_names = followers_of_auth_user 
+   screen_names.include?(target)
+  end
+
+  def dm(target, message)
+    
+    if isFollower?(target)
+      puts "Trying to send #{target} a direct message:"
+      @client.direct_message_create(target, message)
+    else
+      puts "You may only direct message users who are following you"
+    end
+  end 
+
+
+  def tweet(message)
+   if message.length > 140
+    puts "messages may not be more than 140 charachters!!!"
+   else
+    @client.update(message)
+   end
+  end
+
+  def run
+    puts "Welcome to the JSL Twitter Client!"
+    input = ""
+    while input != "q"
+      printf "enter command: "
+      input = gets.chomp
+      parts = input.split(" ")
+      command = parts[0]
+
+      case command 
+        when "q"  then puts "Peace out good bye!!!"
+        when "t"  then tweet(parts[1..-1].join(" "))
+        when "dm" then dm(parts[1], parts[2..-1].join(" "))
+        else
+          puts "Sorry, I have no idea how to process #{command}"
+      end
+    end
+  end
+end
+
+blogger = MicroBlogger.new
+blogger.run
+
