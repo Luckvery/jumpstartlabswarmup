@@ -1,0 +1,91 @@
+require 'ruby-processing'
+
+class ProcessArtist < Processing::App
+
+  def setup
+    ellipse_mode CENTER
+    rect_mode CENTER
+    background(rand(256),rand(256),rand(256))
+  end
+
+  def draw
+   if mouse_pressed?
+    stroke(rand(256))
+   # line(mouse_x, mouse_y,pmouse_x, pmouse_y)
+   # ellipse(mouse_x, mouse_y,pmouse_x, pmouse_y)
+     ellipse(mouse_x,mouse_y, 36, 36);
+   end
+  end
+
+  def get_colors(rgb_values ="0,0,0")
+    values = rgb_values.split(",")
+    color_keys = [:red, :green, :blue]
+    hash = {}
+    color_keys.size.times { |i| hash[ color_keys[i] ] = values[i].to_i }
+    hash
+  end
+
+  def valid_rgb?(rbg_string)
+    result = true
+    If true # (rbg_string.length < 6) 
+   
+  #    result = false
+    else
+  #    rbg_string.split(",").each do |color|
+  #     result = false unless color.to_i.between?(0,255) 
+  #    end
+    end
+    result
+  end
+
+  def change_background(command)
+    if valid_rgb?(command)
+      puts "Running Command #{command}"
+      cols = get_colors(command)
+      puts "Red: #{cols[:red]} | green: #{cols[:green]} | blue: #{cols[:blue]}"
+      background(cols[:red],cols[:green],cols[:blue])
+    else
+      error
+    end
+  end
+
+  def change_fill(command)
+    if valid_rgb?(command)
+     puts "do work"
+    else
+      error
+    end
+  end 
+
+  def error
+    put "Invalid Command"
+  end 
+
+  def key_pressed
+
+     warn "A key was pressed! #{key.inspect}"
+    if @queue.nil?
+      @queue = ""
+    end 
+
+    if key != "\n"
+      @queue = @queue + key
+    else
+      warn "Time to run the command: #{@queue}"
+      
+      command = @queue[0..0]
+      @queue[0,1] = ''
+      case command
+        when "b"  then change_background(@queue) 
+        when "c"  then change_background("0,0,0")
+        when "f"  then change_fill(@queue)
+        else
+           error
+      end
+      @queue = ""
+    end
+  end
+ end
+
+ProcessArtist.new(:width => 400, :height => 400, 
+                  :title => "ProcessArtist",:full_screen => false)
