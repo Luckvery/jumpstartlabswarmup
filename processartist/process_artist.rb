@@ -22,7 +22,6 @@ class ProcessArtist < Processing::App
                     "Square", "Wide Rectangle", "Tall Rectangle", "Plus"]
   end
                     
-
   def draw
    if mouse_pressed?
     stroke(rand(256))
@@ -31,7 +30,6 @@ class ProcessArtist < Processing::App
   end
 
   def draw_shape
-   success = true
    case @brush_types[@brush]
      when "Circle"    then
       ellipse(mouse_x,mouse_y, @scale_value, @scale_value)
@@ -112,8 +110,7 @@ class ProcessArtist < Processing::App
 
   def change_fill(command)
     if valid_rgb?(command)
-      @bg_color = get_colors(command)
-      fill(@bg_color)
+      fill(get_colors(command))
       puts "Changed fill color"
     else
       error "Fill Color"
@@ -148,9 +145,32 @@ class ProcessArtist < Processing::App
     end
   end
 
+  # Mouse events don't fire in watch mode http://bit.ly/1dQNcED
+  # They do work with "rp5 run"
   def error(issue="Command")
     puts "Invalid " + issue
   end 
+  def mouse_dragged
+    puts "Mouse Dragged"
+  end
+  def mouse_move
+    puts "Mouse Move"
+  end
+  def mouse_pressed
+    puts "Mouse Pressed"
+  end
+  def mouse_clicked
+    puts "Mouse Clicked"
+  end
+  def mouse_released
+    puts "Mouse Released"
+  end
+  def mouse_down
+    puts "Mouse Down"
+  end
+  def mouse_up
+    puts "Mouse Up"
+  end
 
   def key_pressed
 
@@ -175,6 +195,10 @@ class ProcessArtist < Processing::App
         when "+"  then increase_brush_size
         when "-"  then decrease_brush_size
         when "s"  then change_brush(@queue)
+        when "e"  then fill(@bg_color)
+        when "a"  then puts "TODO: implement auto-erasure"
+        when "r"  then puts "TODO: implement canvas resize"
+        when "k"  then puts "TODO: implement change stroke color"
         else
            error command
       end
