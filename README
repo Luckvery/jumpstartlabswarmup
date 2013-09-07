@@ -1,3 +1,16 @@
-Working through the tutorials at Jumpstartlabs(http://tutorials.jumpstartlab.com)
+My implementations of apps at Jumpstartlabs(http://tutorials.jumpstartlab.com)
 
-Learning Ruby and Rails the "hard way"...
+Process Artist
+Goal - In the end, we’ll have a Ruby Processing program which:
+
+                                                         Example Commands
+    Presents a blank canvas
+    Paints with brushes via the mouse
+    Sets the color of that canvas using the keyboard     "b255,215,0"
+    Offers several(1-9) brushes switchable via keystroke "s1"
+    Changes fill color via the keyboard                  "f255,215,0"
+    Changes stroke color via the keyboard                "k255,215,0"
+    Changes brush size via the keyboard                  "+/-"
+    Erases with brushes via the keyboard + mouse         "e"
+    Clears the canvas via the keyboard                   "c"
+    Resize canvas                                        "r500,700"
