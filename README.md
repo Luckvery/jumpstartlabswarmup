@@ -1,6 +1,9 @@
-My implementations of apps at Jumpstartlabs(http://tutorials.jumpstartlab.com)
+Jumpstart Labs
+==============
+My implementations of apps at(http://tutorials.jumpstartlab.com)
 
-#Process Artist
+Process Artist
+--------------
 Goal - In the end, we’ll have a Ruby Processing program which:
 
                                                          Example Commands
@@ -16,7 +19,8 @@ Goal - In the end, we’ll have a Ruby Processing program which:
     Resize canvas                                        "r500,700"
     
     
-#MicroBlogger
+MicroBlogger
+-------------
 Goal - A client that interacts with the Twitter mess  case command
 
                                                                  Example Commands
