@@ -1,13 +1,11 @@
-require 'ruby-processing'
 
-class ProcessArtist < Processing::App
 
-  def setup
+  def setup    
     ellipse_mode CENTER
     rect_mode CENTER
     @scale_value = 36
-    @angle = 0
-    @brush=0
+    @angle =@brush=0
+    size 400,400
     init_brush_types
     init_background_color
   end
@@ -87,14 +85,13 @@ class ProcessArtist < Processing::App
 
   def valid_rgb?(rbg_string)
     result = true
-    if (rbg_string.length < 5)
-      puts rbg_string + " < 6"
-     result = false
-    else
-      rbg_string.split(",").each do |color|
-       result = false unless color.to_i.between?(0,255) 
-      end
-    end
+     if (rbg_string.length < 5) || (rbg_string.count(",") != 2)
+      result = false
+     else
+       rbg_string.split(",").each do |color|
+        result = false unless color.to_i.between?(0,255) 
+       end
+     end
     result
   end
 
@@ -105,7 +102,6 @@ class ProcessArtist < Processing::App
       puts "Changed Background color"
     else
       error "Background Color"
-    end
   end
 
   def change_fill(command)
@@ -116,6 +112,21 @@ class ProcessArtist < Processing::App
       error "Fill Color"
     end
   end 
+  
+  def valid_height_width?(command)
+    #3 or more digits followed by a "," followed by 3 or more digits
+    regex = /^[0-9]{3,},[0-9]{3,}$/
+    regex.match(command) ? true : false  
+  end
+ 
+  def resize_canvas(command)
+    if valid_height_width?(command)
+      dimensions = command.split(",")
+      size dimensions[0].to_i, dimensions[1].to_i
+    else
+       error "Command: example format: r400,400"
+    end
+  end
 
   def change_brush(command)
     #only a zero if not a number and s0 is not an option
@@ -145,8 +156,6 @@ class ProcessArtist < Processing::App
     end
   end
 
-  # Mouse events don't fire in watch mode http://bit.ly/1dQNcED
-  # They do work with "rp5 run"
   def error(issue="Command")
     puts "Invalid " + issue
   end 
@@ -173,8 +182,7 @@ class ProcessArtist < Processing::App
   end
 
   def key_pressed
-
-     warn "A key was pressed! #{key.inspect}"
+     puts "A key was pressed! #{key.inspect}"
 
     if @queue.nil?
       @queue = ""
@@ -184,7 +192,6 @@ class ProcessArtist < Processing::App
       error
     elsif key != "\n"
      @queue = @queue + key  
-    
     else 
       command = @queue[0..0]
       @queue[0,1] = ''
@@ -197,7 +204,7 @@ class ProcessArtist < Processing::App
         when "s"  then change_brush(@queue)
         when "e"  then fill(@bg_color)
         when "a"  then puts "TODO: implement auto-erasure"
-        when "r"  then puts "TODO: implement canvas resize"
+        when "r"  then resize_canvas(@queue)
         when "k"  then puts "TODO: implement change stroke color"
         else
            error command
@@ -206,6 +213,3 @@ class ProcessArtist < Processing::App
     end
   end
  end
-
-ProcessArtist.new(:width => 400, :height => 400, 
-                  :title => "ProcessArtist",:full_screen => false)
