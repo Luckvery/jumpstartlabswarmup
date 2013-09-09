@@ -32,7 +32,26 @@ Goal - A client that interacts with the Twitter mess  case command
     Display the last tweets of all your friends                  "elt"
     bit.ly shortena a url                                        "s <url>"
     Show clout scores of all your friends (decending)            "klout "
-    quit program                                                 "q"  
+    quit program                                                 "q"
+
+
+
+
+
+WebGuesser
+-------------
+Goals: In this introductory level project, you’ll we use Sinatra to build 
+a trivial number guessing game.
+
+    Generate a random number on startup
+    Have a web page where you can enter a guess
+    Tell you whether your guess was:
+        Way too high
+        Too high
+        Correct
+        Too low
+        Way too low
+  
     
     
 
