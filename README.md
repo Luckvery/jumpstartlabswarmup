@@ -32,12 +32,7 @@ Goal - A client that interacts with the Twitter mess  case command
     Display the last tweets of all your friends                  "elt"
     bit.ly shortena a url                                        "s <url>"
     Show clout scores of all your friends (decending)            "klout "
-    quit program                                                 "q"
-    
-
-
-
-    
+    quit program                                                 "q"  
     
     
 
